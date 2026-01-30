@@ -18,10 +18,10 @@ void Welcome()
     while (isinvalid)
     {
 
-        if (att>=3 && ((cin.rdstate() & ios::failbit) || pin<1000 || pin>9999))
+        if (att>=3 && (cin.fail() || cin.peek() != '\n' || pin < 1000 || pin > 9999)) 
         {
             cout<<"Attempts " << att << " of 3 Your Card has been blocked, tezak 7mra"; 
-            break;
+            exit(0);
         }
         
 
@@ -39,23 +39,27 @@ void Welcome()
         else if (pin<1000 || pin>9999 )
         {
             cout<<"Sike, that's the wrong number only 4 numbers, try again, Attempts " << att << " of 3"<<endl;
+            cin.ignore(1000,'\n');
             cout<<"Enter Your Pin"<<endl;
             att++;
             cin>>pin;
         }
-    
+        else if (cin.peek() != '\n')
+        {
+            cout << "Invalid entry. Decimals are not permitted. Please enter a whole number, Attempts " << att << " of 3"<<endl;
+            cin.ignore(1000,'\n');
+            cout<<"Enter Your Pin"<<endl;
+            att++;
+            cin>>pin;
+        }
+
          else
         {
             isinvalid = false;
             cout<<"///////////////////////////////Welcome to the System///////////////////////////////"<<endl;
-            
-     
-        }
-
-        
+        }  
     }
 
-   
 }
 void viewbalance() 
 
@@ -69,19 +73,27 @@ void deposit() //ايداع
     cout<<"How much do you wish to deposit?"<<endl;
     cin>>deposit;
 
-    while ( cin.fail() || deposit<=0 )
+    while ( cin.fail() || cin.peek() != '\n' || deposit<=0 || deposit > 9999999  )
     {
 
         if (cin.fail())
         {
-           cout<<"Invalid entry. Letters and decimals are not permitted. Please enter a whole number"; 
-           cin.clear();
-           cin.ignore(1000,'\n');
+           cout<<"Invalid entry. Letters are not permitted. Please enter a number"<<endl; 
+           cin.clear();  
+        }
+        else if (deposit > 9999999)
+        {
+            cout<<"The maximum deposit amount is 9,999,999. Please enter a smaller amount."<<endl;
+        }
+        else if (cin.peek() != '\n')
+        {
+            cout << "Invalid entry. Decimals are not permitted. Please enter a whole number:"<<endl;
         }
         else
         {
         cout << "Invalid amount! Please enter a positive number: "<<endl;
         }
+        cin.ignore(1000,'\n');
         cout<<"Enter number: "<<endl;
         cin>>deposit;
     }
@@ -98,30 +110,31 @@ void withdraw()  //سحب
     cout<<"How much do you wish to withdraw?"<<endl;
     cin>>withdraw;
 
-    while ( cin.fail() || withdraw > balance || withdraw <= 0 )
+    while ( cin.fail() || cin.peek() != '\n' || withdraw > balance || withdraw <= 0 )
     {
 
          if (cin.fail())
         {
-           cout<<"Invalid entry. Letters and decimals are not permitted. Please enter a whole number"; 
+           cout<<"Invalid entry. Letters are not permitted. Please enter a whole number"<<endl; 
            cin.clear();
            cin.ignore(1000,'\n');
-           
         }
         else if (withdraw > balance)
         {
             cout<<"You cannot withdraw more money than your balance."<<endl;
         }
+        else if (cin.peek() != '\n')
+        {
+            cout << "Invalid entry. Decimals are not permitted. Please enter a whole number:"<<endl;
+        }
         else 
         {
             cout<<"Invalid amount! Please enter a positive number:"<<endl;
         }
-       
-
+        cin.ignore(1000,'\n');
         cout<<"Enter number: "<<endl;
         cin>>withdraw;
-    }
-
+       }
     balance= balance - withdraw;
 
     cout<<"The operation was successful."<<endl;
@@ -155,7 +168,7 @@ do
            cout<<"Invalid! only numbers from 1 to 4"<<endl;
            cin.clear();
            cin.ignore(1000,'\n');
-           
+           continue;
     
         }
     switch (choice)
@@ -166,7 +179,7 @@ do
      case 4 : cout<<"Goodbye,Have a nice day/night"<<endl; break;
      default: cout << "Please select 1, 2, 3, or 4 only." << endl;
     }
-    
+     cin.ignore(1000,'\n');
     } while (choice != 4);
 
    return 0;
