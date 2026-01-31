@@ -20,11 +20,9 @@ void Welcome()
 
         if (att>=3 && (cin.fail() || cin.peek() != '\n' || pin < 1000 || pin > 9999)) 
         {
-            cout<<"Attempts " << att << " of 3 Your Card has been blocked, tezak 7mra"; 
+            cout<<"Attempts " << att << " of 3 Your Card has been blocked"; 
             exit(0);
         }
-        
-
         if (cin.fail())
         {
            cout<<"Invalid! This is either not a number or way too long, Attempts " << att << " of 3"<<endl;
@@ -35,7 +33,6 @@ void Welcome()
            att++;
            cin>>pin;
         }
-
         else if (pin<1000 || pin>9999 )
         {
             cout<<"Sike, that's the wrong number only 4 numbers, try again, Attempts " << att << " of 3"<<endl;
@@ -91,7 +88,7 @@ void deposit() //ايداع
         }
         else
         {
-        cout << "Invalid amount! Please enter a positive number: "<<endl;
+        cout << "Invalid entry! Please enter a positive number: "<<endl;
         }
         cin.ignore(1000,'\n');
         cout<<"Enter number: "<<endl;
@@ -129,7 +126,7 @@ void withdraw()  //سحب
         }
         else 
         {
-            cout<<"Invalid amount! Please enter a positive number:"<<endl;
+            cout<<"Invalid entry. Please enter a positive number:"<<endl;
         }
         cin.ignore(1000,'\n');
         cout<<"Enter number: "<<endl;
@@ -138,8 +135,6 @@ void withdraw()  //سحب
     balance= balance - withdraw;
 
     cout<<"The operation was successful."<<endl;
-
-
 }
 void mainmenu()
 {
@@ -149,7 +144,6 @@ void mainmenu()
     cout<<"///4- Exit "<<endl;
 }
 
-
 int main()
 
 {
@@ -158,7 +152,7 @@ int main()
     int choice;
 
 do
-{
+    {
     mainmenu();
 
     cin>>choice;
@@ -169,7 +163,6 @@ do
            cin.clear();
            cin.ignore(1000,'\n');
            continue;
-    
         }
     switch (choice)
     {
